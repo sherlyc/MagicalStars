@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Magical Stars</title>
+	<script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.28/howler.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/stars.css">
+	<script type="text/paperscript" canvas="myCanvas">
+
+		var keyData = {
+
+		q: {
+		sound: new Howl({
+  		urls: ['assets/musicbox/C4.mp3']
+		}),
+		color: '#1abc9c'
+		},
+		w: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/D4.mp3']
+			}),
+			color: '#2ecc71'
+		},
+		e: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/E4.mp3']
+			}),
+			color: '#3498db'
+		},
+		r: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/F4.mp3']
+			}),
+			color: '#9b59b6'
+		},
+			t: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/G4.mp3']
+			}),
+			color: '#34495e'
+		},
+		y: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/A4.mp3']
+			}),
+			color: '#16a085'
+		},
+		u: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/B4.mp3']
+			}),
+			color: '#27ae60'
+		},
+		i: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/C5.mp3']
+			}),
+			color: '#2980b9'
+		},
+		o: {
+			sound: new Howl({
+				urls: ['assets/musicbox/D5.mp3']
+			}),
+			color: '#8e44ad'
+		},
+		p: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/E5.mp3']
+			}),
+			color: '#2c3e50'
+		},
+		a: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/F5.mp3']
+			}),
+			color: '#f1c40f'
+		},
+		s: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/G5.mp3']
+			}),
+			color: '#e67e22'
+		},
+			d: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/A5.mp3']
+			}),
+			color: '#e74c3c'
+		},
+		f: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/B5.mp3']
+			}),
+			color: '#95a5a6'
+		},
+		g: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/C6.mp3']
+			}),
+			color: '#f39c12'
+		},
+		h: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/B5.mp3']
+			}),
+			color: '#d35400'
+		},
+		j: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/A5.mp3']
+			}),
+			color: '#1abc9c'
+		},
+		k: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/G5.mp3']
+			}),
+			color: '#2ecc71'
+		},
+		l: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/F5.mp3']
+			}),
+			color: '#3498db'
+		},
+		z: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/E5.mp3']
+			}),
+			color: '#9b59b6'
+		},
+		x: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/D5.mp3']
+			}),
+			color: '#34495e'
+		},
+		c: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/C5.mp3']
+			}),
+			color: '#16a085'
+		},
+		v: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/B4.mp3']
+			}),
+			color: '#27ae60'
+		},
+		b: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/A4.mp3']
+			}),
+			color: '#2980b9'
+		},
+		n: {
+			sound: new Howl({
+				urls: ['assets/musicbox/G4.mp3']
+			}),
+			color: '#8e44ad'
+		},
+		m: {
+			sound: new Howl({
+	  		urls: ['assets/musicbox/F4.mp3']
+			}),
+			color: '#2c3e50'
+		}
+	}
+
+		var stars = [];
+
+		function onKeyDown(event){ //generate random star and play sound.
+
+			if(keyData[event.key]){
+				var maxPoint = new Point(view.size.width, view.size.height);
+				var randomPoint = Point.random();
+				var point = maxPoint * randomPoint;
+				var newStar = new Path.Star(new Point(point), 5, 200, 500);
+				newStar.fillColor = keyData[event.key].color;
+				keyData[event.key].sound.play();
+				stars.push(newStar);
+			}
+		}
+
+        function onFrame(event){ //shrink the star until disappear
+
+            for (var i = 0; i < stars.length; i++){
+            	stars[i].fillColor.hue += 1;
+            	stars[i].scale(.9);
+            	if(stars[i].area < 1){
+			      stars[i].remove();
+			      stars.splice(i, 1);
+			    }
+            }
+
+        }
+
+
+    </script>
+</head>
+<body>
+	<div class="note">Press any key from A-Z</div>
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>
